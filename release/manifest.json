@@ -2,7 +2,7 @@
   "format": "amcp-release-manifest-v2",
   "note": "Manifest covers public release inputs and excludes generated build/cache data plus the release manifest/checksum files themselves.",
   "file_count": 39,
-  "total_bytes": 83691,
+  "total_bytes": 84259,
   "files": [
     {
       "path": ".gitignore",
@@ -21,13 +21,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 7996,
-      "sha256": "6f9e1cd6b5faf437f10f74c205584c3c444908f17152d92a373a3341ddc47b8c"
+      "bytes": 8441,
+      "sha256": "819c43a8ecd36599459fba5809b766dd5332c03e37ae39529ce0640df324a472"
     },
     {
       "path": "README.ru.md",
-      "bytes": 10594,
-      "sha256": "53a4d1e5e2dcc4c410c22a7232cae622306e95dc30e7a34ee72c873807e9dd21"
+      "bytes": 10634,
+      "sha256": "3b67209c5239036102cf1561303908f645f5c07ba74d36425678c409a5d4979a"
     },
     {
       "path": "docs/architecture.md",
@@ -191,8 +191,8 @@
     },
     {
       "path": "tests/test_public_release.py",
-      "bytes": 2670,
-      "sha256": "47374361910a9c98381784e5c03556fd48679917dbfe010f539a59f5e5637090"
+      "bytes": 2753,
+      "sha256": "362d8fa7c9d662558f38e5a633e4325678b0e40acc3b9932a5b16560a838507e"
     },
     {
       "path": "tests/test_resources.py",

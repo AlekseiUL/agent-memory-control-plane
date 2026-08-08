@@ -41,8 +41,9 @@ class PublicReleaseTests(unittest.TestCase):
             self.assertIn("FTS5", text)
             for url in PUBLIC_URLS:
                 self.assertIn(url, text)
-        self.assertIn("Русская версия", english)
-        self.assertIn("English version", russian)
+        self.assertIn("Полное описание на русском", english)
+        self.assertIn("По-русски", english)
+        self.assertIn("Full English description", russian)
         self.assertIn("never", english.lower())
         self.assertIn("никогда", russian.lower())
 

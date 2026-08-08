@@ -1,6 +1,6 @@
 # Agent Memory Control Plane
 
-[English version](README.md)
+**Русский** · [🇬🇧 Full English description](README.md)
 
 Локальный governance-слой для памяти AI-агентов: детерминированная маршрутизация, явный владелец истины, review перед promotion, scope-aware retrieval, обработка конфликтов и проверяемые receipts.
 

@@ -1,8 +1,10 @@
 # Agent Memory Control Plane
 
-[Русская версия](README.ru.md)
+**English** · [🇷🇺 Полное описание на русском](README.ru.md)
 
 A local-first governance layer for AI-agent memory: deterministic routing, explicit ownership, review before promotion, scope-aware retrieval, conflict handling, and auditable receipts.
+
+> **По-русски:** локальная система управления памятью AI-агентов с явными владельцами истины, проверкой перед записью, разграничением доступа, обработкой конфликтов и аудитом. [Открыть полное русское описание →](README.ru.md)
 
 This is **not another vector-memory demo**. It answers the harder operational questions:
 
