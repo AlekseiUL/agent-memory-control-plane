@@ -11,6 +11,14 @@
   "non_memory_classes":["non_memory"],
   "scopes":["private","team","public"],
   "access":{"public_reader":["public"],"assistant":["private","public"],"team_member":["team","public"],"dispatcher":["private","team","public"],"reviewer":["team","public"]},
+  "capabilities":{
+    "assistant":{"roles":["assistant"],"read_scopes":["private","public"],"write_modes":["candidate"],"write_sources":["profile-memory"],"forbidden":["direct_record_write"]},
+    "dispatcher":{"roles":["dispatcher"],"read_scopes":["private","team","public"],"write_modes":["candidate"],"write_sources":["governance"],"forbidden":["direct_record_write"]},
+    "domain-owner":{"roles":["domain-owner"],"read_scopes":["team","public"],"write_modes":["candidate"],"write_sources":["source-card"],"forbidden":["direct_record_write"]},
+    "developer":{"roles":["developer"],"read_scopes":["team","public"],"write_modes":["candidate"],"write_sources":["procedure-library"],"forbidden":["direct_record_write"]},
+    "researcher":{"roles":["researcher"],"read_scopes":["team","public"],"write_modes":["candidate"],"write_sources":["public-knowledge"],"forbidden":["direct_record_write"]},
+    "writer":{"roles":["writer"],"read_scopes":["team","public"],"write_modes":[],"write_sources":[],"forbidden":["candidate_write","direct_record_write"]}
+  },
   "promotion":{"reviewer_roles":["reviewer","dispatcher"],"auto_merge":false,"auto_delete":false},
   "retention":{"runtime_evidence":"do_not_index","candidate_days":30},
   "forbidden_patterns":["(?i)BEGIN[ ]+(RSA|OPENSSH)[ ]+PRIVATE[ ]+KEY","(?i)(api[_-]?key|access[_-]?token|password)\\s*[:=]\\s*[^ ]{8,}","(?i)raw[_ -]?session"]

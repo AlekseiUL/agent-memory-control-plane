@@ -10,7 +10,7 @@
         "decision": "promote",
         "supersedes": null,
         "conflict_id": null,
-        "timestamp": "2026-08-08T16:11:45+00:00",
+        "timestamp": "2026-08-08T16:25:30+00:00",
         "record_id": 1
       },
       "retrieval": [
@@ -22,7 +22,7 @@
           "owner": "assistant",
           "scope": "private",
           "confidence": 0.9,
-          "updated_at": "2026-08-08T16:11:45+00:00",
+          "updated_at": "2026-08-08T16:25:30+00:00",
           "retrieval_reason": "fts5_match",
           "writeback_target": "memory/profile.json",
           "conflict_signal": false,
@@ -46,7 +46,7 @@
         "decision": "promote",
         "supersedes": null,
         "conflict_id": null,
-        "timestamp": "2026-08-08T16:11:45+00:00",
+        "timestamp": "2026-08-08T16:25:30+00:00",
         "record_id": 2
       },
       "retrieval": [
@@ -58,7 +58,7 @@
           "owner": "dispatcher",
           "scope": "team",
           "confidence": 0.9,
-          "updated_at": "2026-08-08T16:11:45+00:00",
+          "updated_at": "2026-08-08T16:25:30+00:00",
           "retrieval_reason": "fts5_match",
           "writeback_target": "governance/policy.md",
           "conflict_signal": false,
@@ -77,7 +77,7 @@
           "owner": "researcher",
           "scope": "public",
           "confidence": 0.9,
-          "updated_at": "2026-08-08T16:11:45+00:00",
+          "updated_at": "2026-08-08T16:25:30+00:00",
           "retrieval_reason": "fts5_match",
           "writeback_target": "knowledge/public.json",
           "conflict_signal": false,

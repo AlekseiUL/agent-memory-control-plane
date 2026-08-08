@@ -8,6 +8,7 @@
     "roles",
     "read_scopes",
     "write_modes",
+    "write_sources",
     "forbidden"
   ],
   "properties": {
@@ -21,7 +22,14 @@
       "type": "array"
     },
     "write_modes": {
-      "type": "array"
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "write_sources": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
     },
     "forbidden": {
       "type": "array"

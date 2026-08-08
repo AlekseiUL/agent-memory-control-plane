@@ -13,8 +13,8 @@ stateDiagram-v2
 ```
 
 1. `classify` выбирает class и writeback target.
-2. `propose` сначала показывает dry-run; `--apply` создаёт candidate и audit event.
-3. `promote` проверяет reviewer role, precedence и текущую active record.
+2. `propose` проверяет actor/source capability и точное совпадение owner/scope с source manifest, затем показывает dry-run; `--apply` создаёт candidate и audit event.
+3. `promote` повторно проверяет proposal boundary, reviewer role, provenance-aware precedence и текущую active record.
 4. Conflict не переписывает canonical truth.
 5. Promotion создаёт receipt, обновляет projection и сохраняет provenance.
 6. Search фильтрует scope; explain возвращает причину retrieval и сигналы conflict/staleness.

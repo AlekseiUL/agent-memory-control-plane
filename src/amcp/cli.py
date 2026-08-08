@@ -10,7 +10,7 @@ def parser():
     sub.add_parser("init")
     c=sub.add_parser("classify"); c.add_argument("content"); c.add_argument("--class-name"); c.add_argument("--dry-run",action="store_true")
     for name in ("propose","ingest"):
-        x=sub.add_parser(name); x.add_argument("key"); x.add_argument("content"); x.add_argument("--source",default="profile-memory"); x.add_argument("--owner",default="assistant"); x.add_argument("--scope",default="private"); x.add_argument("--confidence",type=float,default=.8); x.add_argument("--class-name"); x.add_argument("--actor",default="contributor"); x.add_argument("--apply",action="store_true"); x.add_argument("--dry-run",action="store_true")
+        x=sub.add_parser(name); x.add_argument("key"); x.add_argument("content"); x.add_argument("--source",default="profile-memory"); x.add_argument("--owner",default="assistant"); x.add_argument("--scope",default="private"); x.add_argument("--confidence",type=float,default=.8); x.add_argument("--class-name"); x.add_argument("--actor",default="assistant"); x.add_argument("--apply",action="store_true"); x.add_argument("--dry-run",action="store_true")
     x=sub.add_parser("promote"); x.add_argument("candidate_id",type=int); x.add_argument("--reviewer",default="reviewer"); x.add_argument("--apply",action="store_true")
     x=sub.add_parser("search"); x.add_argument("query"); x.add_argument("--actor",default="public_reader"); x.add_argument("--limit",type=int,default=10)
     x=sub.add_parser("explain"); x.add_argument("record_id",type=int); x.add_argument("--actor",default="public_reader")

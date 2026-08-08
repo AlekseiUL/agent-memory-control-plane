@@ -17,9 +17,9 @@
       "sha256": "6d2adf6b0e0561877ae77aa5bb0bbb5bbec4d29641b1c91162c6fcf5e781b0af"
     },
     {
-      "bytes": 4029,
+      "bytes": 4459,
       "path": "README.md",
-      "sha256": "911e407ed400ccc10002816e3df4d6eab42f6d8765c27d89ad980b6eea67a158"
+      "sha256": "f6566f0d38c4450cc105481151e4c87fe43d6dd292efc68dd064a975558a28d8"
     },
     {
       "bytes": 791,
@@ -34,27 +34,27 @@
     {
       "bytes": 2524,
       "path": "docs/demo-traces.json",
-      "sha256": "4b69e2174888aa92bacd85f34b5569c4bfe16820280006ea0c7f484e31a5af59"
+      "sha256": "e7e2b25bedd8749f37fc577ea5bf6cff454e5862e8c9fb374e01cc9bb6834008"
     },
     {
-      "bytes": 937,
+      "bytes": 1098,
       "path": "docs/memory-lifecycle.md",
-      "sha256": "287b02751b8124b7c30395f266a3b1b1432bff5649699a0366a6527f5be747f3"
+      "sha256": "0e27e40ce957ac25542da29c80c1a472a33f231dd17dd12ea76570680ec7ff38"
     },
     {
-      "bytes": 1245,
+      "bytes": 1528,
       "path": "docs/privacy-threat-model.md",
-      "sha256": "1b0865d2fc33adbe1efed59c5914b69319a8bcfcbb12d63fd8d68996b740c5c1"
+      "sha256": "0a2585ae2be8a008b496a35be50706989e3510344874200f7c29fde08534158f"
     },
     {
-      "bytes": 933,
+      "bytes": 1058,
       "path": "docs/source-hierarchy.md",
-      "sha256": "737c311d6bb27947e45223ef116e2e947970d65dd92c8296790b8c165b252be8"
+      "sha256": "cde357e10a2c28f69b76cf749d53e3dc2f3f7afe6a229a7b0ae57bba90762870"
     },
     {
-      "bytes": 797,
+      "bytes": 1165,
       "path": "docs/team-interaction.md",
-      "sha256": "34709194047cfb26232b7554fbefae63b0f32b2ed0f148bf7138658bcf63756f"
+      "sha256": "33b30e7ea942256d0d75794736229d9a8fc0d00d70a2de34dcf43ea05334088d"
     },
     {
       "bytes": 1021,
@@ -62,9 +62,9 @@
       "sha256": "1906757646a6028d854b9a7c2119fe71b5121f74d3c8b00d7464aa2803664039"
     },
     {
-      "bytes": 1652,
+      "bytes": 1720,
       "path": "examples/run_scenarios.py",
-      "sha256": "155b780757b5235b6626296259bcff6684d498b20ef8c7a7107732047fbd69d0"
+      "sha256": "7b9de3f59f7ddfd64d846fce47064230a7b07b82b181e43272b935a8ca3aca7e"
     },
     {
       "bytes": 645,
@@ -82,19 +82,19 @@
       "sha256": "f1fa6beafa8912461e4ca21404daeed5ec630db899408993b90fc6c359284ad4"
     },
     {
-      "bytes": 2528,
+      "bytes": 2526,
       "path": "src/amcp/cli.py",
-      "sha256": "830601c228493966785a36bc509e53646f5c89d8617a5531f389b5ab1be92ade"
+      "sha256": "8e3025cbe6be7b9cb5b2e1aac6ceb80e022b6116355ebaada9751aaba4cdb76c"
     },
     {
-      "bytes": 13454,
+      "bytes": 15339,
       "path": "src/amcp/core.py",
-      "sha256": "242d2a68cdc048c319854ce4593734e832e1dfc2e61615a7e218bd6486febe95"
+      "sha256": "2b4599684becf662e2d04fae42118597acc319b71183eec78d27e62877fd8ecc"
     },
     {
-      "bytes": 2503,
+      "bytes": 2501,
       "path": "src/amcp/mcp_adapter.py",
-      "sha256": "c459f472c1845eaa6126b64dda115b42759140ddda23e1622aa5b4dc1526a2db"
+      "sha256": "56ad687f4c8ddcfe36bf179b53a04c03869fe92469a000868366a0117f21df68"
     },
     {
       "bytes": 401,
@@ -102,14 +102,14 @@
       "sha256": "4ccd834d803dcc097907835550a8859e47ccca7f77b12bb0deb73cc09d3c5e19"
     },
     {
-      "bytes": 1502,
+      "bytes": 2563,
       "path": "src/amcp/resources/policies/default.yaml",
-      "sha256": "7c197bcfe64b3e9a3d71b1401fbb93ba6606443219f409ca49b4aa24d565c560"
+      "sha256": "6bf62740cb2bcfea6fc897d398bdd0940baaaab1d2732282823fb7f3c0a49d47"
     },
     {
-      "bytes": 519,
+      "bytes": 716,
       "path": "src/amcp/resources/schemas/agent-capability-card.schema.json",
-      "sha256": "ecf3102adedf332e7634a5db4d4f63f4dfcd28ae110e81b795bd25c6b63bc402"
+      "sha256": "e0f131c87bd192ac3355cd18e7cb5731716c245160b1da9d78ad07f4cac2e0fa"
     },
     {
       "bytes": 731,
@@ -122,9 +122,9 @@
       "sha256": "ad7385706ddc514d6c384749a3ddea656ecbd7b1d3cb501baa6f7a0d0537aa00"
     },
     {
-      "bytes": 624,
+      "bytes": 704,
       "path": "src/amcp/resources/schemas/memory-candidate.schema.json",
-      "sha256": "b14c23dd45aa52eb912e246254ae8de1ef20fb3b898527a5290db009e9a2cdec"
+      "sha256": "d0b08f6389b547cf09592e920d990a4492ac5734f1aeec0e233256589c8c4286"
     },
     {
       "bytes": 560,
@@ -142,9 +142,9 @@
       "sha256": "474c0dd67460a00a04373596f2e972f4566912d55f20ec977d3babcd746c6a3f"
     },
     {
-      "bytes": 4672,
+      "bytes": 7843,
       "path": "tests/test_control_plane.py",
-      "sha256": "1ce391d89d6290dfca367c0b6b778e331c33ddc9092170819522cfb4cd536ec1"
+      "sha256": "92cb2aabdfcae0da841cf3af998f4da4bd9a2e311578b8bce4fe1cce015d97c0"
     },
     {
       "bytes": 688,
@@ -154,5 +154,5 @@
   ],
   "format": "amcp-release-manifest-v1",
   "note": "Manifest covers tracked release inputs before the manifest files themselves are added.",
-  "total_bytes": 49010
+  "total_bytes": 56835
 }

@@ -10,7 +10,8 @@
     "source_id",
     "owner",
     "scope",
-    "confidence"
+    "confidence",
+    "actor"
   ],
   "properties": {
     "key": {
@@ -33,6 +34,10 @@
     },
     "confidence": {
       "type": "number"
+    },
+    "actor": {
+      "type": "string",
+      "minLength": 1
     }
   }
 }

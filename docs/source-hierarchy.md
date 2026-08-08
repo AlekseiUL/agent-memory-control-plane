@@ -8,4 +8,4 @@ Priority задаётся policy-as-code:
 4. `public-knowledge` — публичная canonical knowledge, priority 60.
 5. `profile-memory` — стабильные предпочтения и факты, priority 40.
 
-Нижний источник не может заменить активную запись верхнего источника. Такое предложение создаёт conflict receipt. Равный или более высокий источник может создать новую active record; прежняя получает `superseded` и удаляется только из rebuildable FTS projection, но сохраняется в canonical history.
+Нижний источник не может заменить активную запись верхнего источника, даже если content идентичен. Такое предложение создаёт conflict receipt, а canonical provenance и visibility остаются неизменными. Равный или более высокий источник может создать новую active record; прежняя получает `superseded` и удаляется только из rebuildable FTS projection, но сохраняется в canonical history.

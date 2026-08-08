@@ -6,6 +6,8 @@
 - cloud calls отсутствуют;
 - LLM write отключён;
 - неизвестный scope запрещён;
+- неизвестный actor и source вне его write capability запрещены;
+- owner/scope обязаны совпадать с source manifest;
 - public reader видит только `public`;
 - session transcript и runtime evidence относятся к non-memory;
 - secret assignment и private-key headers блокируются до candidate;
@@ -16,6 +18,7 @@
 | Угроза | Мера |
 |---|---|
 | Scope confusion | allow-list доступа по actor role |
+| Capability/source bypass | deny-by-default actor registry, exact source/owner/scope check при proposal и promotion |
 | Poisoning нижним источником | deterministic precedence gate |
 | Потеря provenance | обязательные owner/source/confidence/timestamp |
 | Необъяснимый retrieval | retrieval receipt и `explain` |

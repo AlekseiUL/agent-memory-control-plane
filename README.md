@@ -19,7 +19,7 @@ python3 -m venv .venv
 .venv/bin/python -m pip install .
 .venv/bin/amcp init
 .venv/bin/amcp classify --dry-run "A procedure with step one"
-.venv/bin/amcp propose greeting "Public onboarding guide" --source public-knowledge --owner researcher --scope public --apply
+.venv/bin/amcp propose greeting "Public onboarding guide" --source public-knowledge --owner researcher --scope public --actor researcher --apply
 .venv/bin/amcp promote 1 --reviewer reviewer --apply
 .venv/bin/amcp search onboarding --actor public_reader
 .venv/bin/amcp explain 1 --actor public_reader
@@ -30,7 +30,7 @@ python3 -m venv .venv
 .venv/bin/python examples/run_scenarios.py
 ```
 
-`propose` и его alias `ingest` являются dry-run по умолчанию. Мутация происходит только с `--apply`. `promote` также dry-run без `--apply`.
+`propose` и его alias `ingest` являются dry-run по умолчанию. Мутация происходит только с `--apply`. Actor обязан быть зарегистрирован в policy и иметь capability для выбранного source; owner и scope должны точно совпадать с source manifest. Без явных source-параметров безопасный default создаёт private candidate от `assistant` в `profile-memory`. `promote` также dry-run без `--apply` и повторно проверяет proposal boundary.
 
 ## Поток
 

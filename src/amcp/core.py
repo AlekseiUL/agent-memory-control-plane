@@ -55,7 +55,7 @@ class ControlPlane:
         ddl = """
 CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS sources(id TEXT PRIMARY KEY,kind TEXT NOT NULL,owner TEXT NOT NULL,scope TEXT NOT NULL,writeback_target TEXT NOT NULL,priority INTEGER NOT NULL,updated_at TEXT NOT NULL);
-CREATE TABLE IF NOT EXISTS candidates(id INTEGER PRIMARY KEY AUTOINCREMENT,key TEXT NOT NULL,content TEXT NOT NULL,class_name TEXT NOT NULL,source_id TEXT NOT NULL,owner TEXT NOT NULL,scope TEXT NOT NULL,confidence REAL NOT NULL,status TEXT NOT NULL,reason TEXT NOT NULL,created_at TEXT NOT NULL,FOREIGN KEY(source_id) REFERENCES sources(id));
+CREATE TABLE IF NOT EXISTS candidates(id INTEGER PRIMARY KEY AUTOINCREMENT,key TEXT NOT NULL,content TEXT NOT NULL,class_name TEXT NOT NULL,source_id TEXT NOT NULL,owner TEXT NOT NULL,scope TEXT NOT NULL,confidence REAL NOT NULL,actor TEXT NOT NULL,status TEXT NOT NULL,reason TEXT NOT NULL,created_at TEXT NOT NULL,FOREIGN KEY(source_id) REFERENCES sources(id));
 CREATE TABLE IF NOT EXISTS records(id INTEGER PRIMARY KEY AUTOINCREMENT,key TEXT NOT NULL,content TEXT NOT NULL,class_name TEXT NOT NULL,source_id TEXT NOT NULL,owner TEXT NOT NULL,scope TEXT NOT NULL,confidence REAL NOT NULL,status TEXT NOT NULL,updated_at TEXT NOT NULL,supersedes INTEGER,FOREIGN KEY(source_id) REFERENCES sources(id));
 CREATE TABLE IF NOT EXISTS conflicts(id INTEGER PRIMARY KEY AUTOINCREMENT,candidate_id INTEGER NOT NULL,record_id INTEGER NOT NULL,signal TEXT NOT NULL,status TEXT NOT NULL,created_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS audit_log(id INTEGER PRIMARY KEY AUTOINCREMENT,event TEXT NOT NULL,actor TEXT NOT NULL,object_type TEXT NOT NULL,object_id TEXT NOT NULL,detail TEXT NOT NULL,created_at TEXT NOT NULL);
@@ -63,11 +63,14 @@ CREATE VIRTUAL TABLE IF NOT EXISTS records_fts USING fts5(content,key,content='r
 """
         with self.connect() as con:
             con.executescript(ddl)
+            candidate_columns = {row["name"] for row in con.execute("PRAGMA table_info(candidates)")}
+            if "actor" not in candidate_columns:
+                con.execute("ALTER TABLE candidates ADD COLUMN actor TEXT NOT NULL DEFAULT 'unregistered'")
             con.execute("INSERT OR REPLACE INTO settings VALUES('local_only','true')")
             con.execute("INSERT OR REPLACE INTO settings VALUES('llm_write','false')")
             for source in self.policy["sources"]:
                 con.execute(
-                    "INSERT OR IGNORE INTO sources VALUES(?,?,?,?,?,?,?)",
+                    "INSERT INTO sources VALUES(?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET kind=excluded.kind,owner=excluded.owner,scope=excluded.scope,writeback_target=excluded.writeback_target,priority=excluded.priority,updated_at=excluded.updated_at",
                     (
                         source["id"], source["kind"], source["owner"],
                         source["scope"], source["writeback_target"],
@@ -105,9 +108,29 @@ CREATE VIRTUAL TABLE IF NOT EXISTS records_fts USING fts5(content,key,content='r
             "mutation": False,
         }
 
+    def _source_manifest(self, source_id: str) -> dict:
+        for source in self.policy["sources"]:
+            if source["id"] == source_id:
+                return source
+        raise NotFound(f"unknown source: {source_id}")
+
+    def _validate_proposal_boundary(self, actor: str, source_id: str, owner: str, scope: str) -> None:
+        source = self._source_manifest(source_id)
+        capability = self.policy["capabilities"].get(actor)
+        if not capability:
+            raise PolicyDenied("unregistered actor")
+        if "candidate" not in capability["write_modes"]:
+            raise PolicyDenied("actor cannot propose candidates")
+        if source_id not in capability["write_sources"]:
+            raise PolicyDenied("actor cannot propose to source")
+        if owner != source["owner"]:
+            raise PolicyDenied("owner does not match source manifest")
+        if scope != source["scope"]:
+            raise PolicyDenied("scope does not match source manifest")
+
     def propose(self, key: str, content: str, source_id: str, owner: str, scope: str,
                 confidence: float = 0.8, class_name: str | None = None,
-                actor: str = "contributor", apply: bool = False) -> dict:
+                actor: str = "assistant", apply: bool = False) -> dict:
         result = self.classify(content, class_name)
         result.update({"key": key, "source_id": source_id, "owner": owner, "scope": scope, "confidence": confidence, "dry_run": not apply})
         if not result["allowed"]:
@@ -120,11 +143,12 @@ CREATE VIRTUAL TABLE IF NOT EXISTS records_fts USING fts5(content,key,content='r
                 raise PolicyDenied("unknown scope")
             if not 0 <= confidence <= 1:
                 raise PolicyDenied("confidence outside 0..1")
+            self._validate_proposal_boundary(actor, source_id, owner, scope)
             if not apply:
                 return result
             cur = con.execute(
-                "INSERT INTO candidates(key,content,class_name,source_id,owner,scope,confidence,status,reason,created_at) VALUES(?,?,?,?,?,?,?,?,?,?)",
-                (key, content, result["class"], source_id, owner, scope, confidence, "proposed", result["reason"], now()),
+                "INSERT INTO candidates(key,content,class_name,source_id,owner,scope,confidence,actor,status,reason,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                (key, content, result["class"], source_id, owner, scope, confidence, actor, "proposed", result["reason"], now()),
             )
             result.update({"candidate_id": cur.lastrowid, "dry_run": False})
             self._audit(con, "candidate_proposed", actor, "candidate", cur.lastrowid, {"key": key, "scope": scope})
@@ -133,7 +157,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS records_fts USING fts5(content,key,content='r
     def promote(self, candidate_id: int, reviewer: str = "reviewer", apply: bool = False) -> dict:
         with self.connect() as con:
             candidate = con.execute(
-                "SELECT c.*,s.priority FROM candidates c JOIN sources s ON s.id=c.source_id WHERE c.id=?",
+                "SELECT c.* FROM candidates c JOIN sources s ON s.id=c.source_id WHERE c.id=?",
                 (candidate_id,),
             ).fetchone()
             if not candidate:
@@ -142,12 +166,19 @@ CREATE VIRTUAL TABLE IF NOT EXISTS records_fts USING fts5(content,key,content='r
                 raise PolicyDenied("candidate is not promotable")
             if reviewer not in self.policy["promotion"]["reviewer_roles"]:
                 raise PolicyDenied("reviewer role denied")
-            current = con.execute(
-                "SELECT r.*,s.priority FROM records r JOIN sources s ON s.id=r.source_id WHERE r.key=? AND r.status='active' ORDER BY s.priority DESC,r.id DESC LIMIT 1",
+            self._validate_proposal_boundary(candidate["actor"], candidate["source_id"], candidate["owner"], candidate["scope"])
+            active_records = con.execute(
+                "SELECT r.* FROM records r JOIN sources s ON s.id=r.source_id WHERE r.key=? AND r.status='active'",
                 (candidate["key"],),
-            ).fetchone()
+            ).fetchall()
+            current = max(
+                active_records,
+                key=lambda row: (self._source_manifest(row["source_id"])["priority"], row["id"]),
+                default=None,
+            )
+            candidate_priority = self._source_manifest(candidate["source_id"])["priority"]
             receipt = {"candidate_id": candidate_id, "reviewer": reviewer, "dry_run": not apply, "decision": "promote", "supersedes": None, "conflict_id": None, "timestamp": now()}
-            if current and current["content"] != candidate["content"] and candidate["priority"] < current["priority"]:
+            if current and candidate_priority < self._source_manifest(current["source_id"])["priority"]:
                 receipt.update({"decision": "conflict", "reason": "lower_priority_cannot_override"})
                 if apply:
                     cur = con.execute(

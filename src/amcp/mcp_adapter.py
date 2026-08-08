@@ -8,7 +8,7 @@ TOOLS=("memory_search","memory_explain","memory_propose","memory_promote","memor
 def call(cp,name,args):
     if name=="memory_search": return cp.search(args["query"],args.get("actor","public_reader"),args.get("limit",10))
     if name=="memory_explain": return cp.explain(args["record_id"],args.get("actor","public_reader"))
-    if name=="memory_propose": return cp.propose(args["key"],args["content"],args.get("source_id","profile-memory"),args.get("owner","assistant"),args.get("scope","private"),args.get("confidence",.8),args.get("class_name"),args.get("actor","contributor"),args.get("apply",False))
+    if name=="memory_propose": return cp.propose(args["key"],args["content"],args.get("source_id","profile-memory"),args.get("owner","assistant"),args.get("scope","private"),args.get("confidence",.8),args.get("class_name"),args.get("actor","assistant"),args.get("apply",False))
     if name=="memory_promote": return cp.promote(args["candidate_id"],args.get("reviewer","reviewer"),args.get("apply",False))
     if name=="memory_conflicts": return cp.conflicts()
     if name=="memory_source_get": return cp.source_get(args["source_id"])
