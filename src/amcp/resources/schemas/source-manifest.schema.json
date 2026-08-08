@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "source-manifest",
+  "required": [
+    "id",
+    "kind",
+    "owner",
+    "scope",
+    "writeback_target",
+    "priority"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "scope": {
+      "enum": [
+        "private",
+        "team",
+        "public"
+      ]
+    },
+    "writeback_target": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "integer"
+    }
+  }
+}

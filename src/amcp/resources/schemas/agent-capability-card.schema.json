@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "agent-capability-card",
+  "required": [
+    "agent_id",
+    "roles",
+    "read_scopes",
+    "write_modes",
+    "forbidden"
+  ],
+  "properties": {
+    "agent_id": {
+      "type": "string"
+    },
+    "roles": {
+      "type": "array"
+    },
+    "read_scopes": {
+      "type": "array"
+    },
+    "write_modes": {
+      "type": "array"
+    },
+    "forbidden": {
+      "type": "array"
+    }
+  }
+}

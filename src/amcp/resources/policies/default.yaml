@@ -1,0 +1,17 @@
+{
+  "sources": [
+    {"id":"governance","kind":"source_of_truth","owner":"dispatcher","scope":"team","writeback_target":"governance/policy.md","priority":100},
+    {"id":"source-card","kind":"source_card","owner":"domain-owner","scope":"team","writeback_target":"sources/cards","priority":90},
+    {"id":"procedure-library","kind":"procedure","owner":"developer","scope":"team","writeback_target":"procedures","priority":70},
+    {"id":"profile-memory","kind":"memory","owner":"assistant","scope":"private","writeback_target":"memory/profile.json","priority":40},
+    {"id":"public-knowledge","kind":"canonical","owner":"researcher","scope":"public","writeback_target":"knowledge/public.json","priority":60}
+  ],
+  "classes":["stable_fact","procedure","team_policy","non_memory"],
+  "routing":{"stable_fact":"memory/profile.json","procedure":"procedures","team_policy":"governance/policy.md","non_memory":"none"},
+  "non_memory_classes":["non_memory"],
+  "scopes":["private","team","public"],
+  "access":{"public_reader":["public"],"assistant":["private","public"],"team_member":["team","public"],"dispatcher":["private","team","public"],"reviewer":["team","public"]},
+  "promotion":{"reviewer_roles":["reviewer","dispatcher"],"auto_merge":false,"auto_delete":false},
+  "retention":{"runtime_evidence":"do_not_index","candidate_days":30},
+  "forbidden_patterns":["(?i)BEGIN[ ]+(RSA|OPENSSH)[ ]+PRIVATE[ ]+KEY","(?i)(api[_-]?key|access[_-]?token|password)\\s*[:=]\\s*[^ ]{8,}","(?i)raw[_ -]?session"]
+}

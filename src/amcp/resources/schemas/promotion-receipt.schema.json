@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "promotion-receipt",
+  "required": [
+    "candidate_id",
+    "reviewer",
+    "decision",
+    "dry_run",
+    "timestamp"
+  ],
+  "properties": {
+    "candidate_id": {
+      "type": "integer"
+    },
+    "reviewer": {
+      "type": "string"
+    },
+    "decision": {
+      "enum": [
+        "promote",
+        "conflict"
+      ]
+    },
+    "dry_run": {
+      "type": "boolean"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  }
+}

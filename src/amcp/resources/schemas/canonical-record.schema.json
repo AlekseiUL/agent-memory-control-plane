@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "canonical-record",
+  "required": [
+    "id",
+    "key",
+    "content",
+    "source",
+    "owner",
+    "scope",
+    "confidence",
+    "updated_at",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "key": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "number"
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "memory-candidate",
+  "required": [
+    "key",
+    "content",
+    "class_name",
+    "source_id",
+    "owner",
+    "scope",
+    "confidence"
+  ],
+  "properties": {
+    "key": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "class_name": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "number"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "status": "ok",
+  "scenarios": [
+    {
+      "scenario": "personal_assistant",
+      "promotion": {
+        "candidate_id": 1,
+        "reviewer": "reviewer",
+        "dry_run": false,
+        "decision": "promote",
+        "supersedes": null,
+        "conflict_id": null,
+        "timestamp": "2026-08-08T16:11:45+00:00",
+        "record_id": 1
+      },
+      "retrieval": [
+        {
+          "record_id": 1,
+          "key": "response-style",
+          "content": "The preferred format is concise",
+          "source": "profile-memory",
+          "owner": "assistant",
+          "scope": "private",
+          "confidence": 0.9,
+          "updated_at": "2026-08-08T16:11:45+00:00",
+          "retrieval_reason": "fts5_match",
+          "writeback_target": "memory/profile.json",
+          "conflict_signal": false,
+          "staleness_signal": false
+        }
+      ]
+    },
+    {
+      "scenario": "multi_agent_team",
+      "roles": [
+        "dispatcher",
+        "researcher",
+        "writer",
+        "developer",
+        "reviewer"
+      ],
+      "promotion": {
+        "candidate_id": 2,
+        "reviewer": "reviewer",
+        "dry_run": false,
+        "decision": "promote",
+        "supersedes": null,
+        "conflict_id": null,
+        "timestamp": "2026-08-08T16:11:45+00:00",
+        "record_id": 2
+      },
+      "retrieval": [
+        {
+          "record_id": 2,
+          "key": "release-rule",
+          "content": "Team policy must require reviewer approval",
+          "source": "governance",
+          "owner": "dispatcher",
+          "scope": "team",
+          "confidence": 0.9,
+          "updated_at": "2026-08-08T16:11:45+00:00",
+          "retrieval_reason": "fts5_match",
+          "writeback_target": "governance/policy.md",
+          "conflict_signal": false,
+          "staleness_signal": false
+        }
+      ]
+    },
+    {
+      "scenario": "public_private_boundary",
+      "public_result": [
+        {
+          "record_id": 3,
+          "key": "public-guide",
+          "content": "Public onboarding guide",
+          "source": "public-knowledge",
+          "owner": "researcher",
+          "scope": "public",
+          "confidence": 0.9,
+          "updated_at": "2026-08-08T16:11:45+00:00",
+          "retrieval_reason": "fts5_match",
+          "writeback_target": "knowledge/public.json",
+          "conflict_signal": false,
+          "staleness_signal": false
+        }
+      ],
+      "private_result": [],
+      "private_record_id": 4,
+      "public_record_id": 3
+    }
+  ]
+}

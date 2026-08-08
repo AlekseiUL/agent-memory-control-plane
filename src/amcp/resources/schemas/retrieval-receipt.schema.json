@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "retrieval-receipt",
+  "required": [
+    "record_id",
+    "source",
+    "owner",
+    "scope",
+    "confidence",
+    "updated_at",
+    "retrieval_reason",
+    "writeback_target",
+    "conflict_signal",
+    "staleness_signal"
+  ],
+  "properties": {
+    "record_id": {
+      "type": "integer"
+    },
+    "source": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "number"
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "retrieval_reason": {
+      "type": "string"
+    },
+    "writeback_target": {
+      "type": "string"
+    },
+    "conflict_signal": {
+      "type": "boolean"
+    },
+    "staleness_signal": {
+      "type": "boolean"
+    }
+  }
+}

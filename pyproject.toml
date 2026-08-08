@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-memory-control-plane"
+version = "0.1.0"
+description = "Local-first governance and retrieval control plane for agent memory"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "AMCP Contributors"}]
+
+[project.scripts]
+amcp = "amcp.cli:main"
+amcp-mcp = "amcp.mcp_adapter:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+amcp = ["resources/policies/*.yaml", "resources/schemas/*.json"]
