@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 import sqlite3
+from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -35,11 +36,19 @@ class ControlPlane:
         self.db_path = Path(self.db_path)
         self.policy = load_policy(self.policy_name)
 
-    def connect(self) -> sqlite3.Connection:
+    @contextmanager
+    def connect(self):
         con = sqlite3.connect(self.db_path)
         con.row_factory = sqlite3.Row
         con.execute("PRAGMA foreign_keys=ON")
-        return con
+        try:
+            yield con
+            con.commit()
+        except Exception:
+            con.rollback()
+            raise
+        finally:
+            con.close()
 
     def init(self) -> dict:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
