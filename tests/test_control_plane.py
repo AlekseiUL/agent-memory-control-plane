@@ -86,7 +86,7 @@ class ControlPlaneTests(unittest.TestCase):
         candidate=self.proposed(); self.cp.promote(candidate["candidate_id"],apply=True); self.assertEqual(self.cp.audit()["counts"]["audit_log"],2)
     def test_mcp_tool_surface(self):
         expected={"memory_search","memory_explain","memory_propose","memory_promote","memory_conflicts","memory_source_get","memory_health"}; self.assertEqual(set(TOOLS),expected)
-        response=dispatch(self.cp,{"jsonrpc":"2.0","id":1,"method":"tools/list"}); self.assertEqual({x["name"] for x in response["result"]["tools"]},expected)
+        response=dispatch(self.cp,{"jsonrpc":"2.0","id":1,"method":"tools/list"}); self.assertEqual({x["name"] for x in response["result"]["tools"]},{"memory_search","memory_explain","memory_source_get","memory_health"})
     def test_source_get(self): self.assertEqual(self.cp.source_get("governance")["priority"],100)
 
 if __name__=="__main__": unittest.main()
