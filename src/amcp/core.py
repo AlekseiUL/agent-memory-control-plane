@@ -166,6 +166,8 @@ CREATE VIRTUAL TABLE IF NOT EXISTS records_fts USING fts5(content,key,content='r
                 raise PolicyDenied("candidate is not promotable")
             if reviewer not in self.policy["promotion"]["reviewer_roles"]:
                 raise PolicyDenied("reviewer role denied")
+            if reviewer == candidate["actor"]:
+                raise PolicyDenied("self approval denied")
             self._validate_proposal_boundary(candidate["actor"], candidate["source_id"], candidate["owner"], candidate["scope"])
             active_records = con.execute(
                 "SELECT r.* FROM records r JOIN sources s ON s.id=r.source_id WHERE r.key=? AND r.status='active'",
@@ -210,10 +212,17 @@ CREATE VIRTUAL TABLE IF NOT EXISTS records_fts USING fts5(content,key,content='r
         return scope in self.policy["access"].get(actor, [])
 
     def search(self, query: str, actor: str = "public_reader", limit: int = 10) -> list[dict]:
+        if type(limit) is not int or not 1 <= limit <= 1000:
+            raise ValueError("limit must be an integer in 1..1000")
+        scopes = self.policy["access"].get(actor, [])
+        if not scopes:
+            return []
+        placeholders = ",".join("?" for _ in scopes)
         with self.connect() as con:
             rows = con.execute(
-                "SELECT r.*,s.writeback_target FROM records_fts f JOIN records r ON r.id=f.rowid JOIN sources s ON s.id=r.source_id WHERE records_fts MATCH ? AND r.status='active' LIMIT ?",
-                (query, limit),
+                "SELECT r.*,s.writeback_target FROM records_fts f JOIN records r ON r.id=f.rowid JOIN sources s ON s.id=r.source_id WHERE records_fts MATCH ? AND r.status='active' "
+                f"AND r.scope IN ({placeholders}) ORDER BY r.id ASC LIMIT ?",
+                (query, *scopes, limit),
             ).fetchall()
             results = []
             for row in rows:

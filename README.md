@@ -116,7 +116,7 @@ python3 -m venv .venv
 
 ## MCP adapter
 
-`amcp-mcp` is a dependency-free JSON-RPC stdio adapter. It exposes:
+`amcp-mcp` is a dependency-free, bounded JSON-RPC stdio adapter. The following tools exist, but discovery and calls are restricted by the launcher's identity:
 
 - `memory_search`
 - `memory_explain`
@@ -126,7 +126,11 @@ python3 -m venv .venv
 - `memory_source_get`
 - `memory_health`
 
-The adapter does not expand privileges or install a connector. Every call is handled by the same policy-aware control plane.
+Breaking security change: `actor` and `reviewer` are rejected in tool arguments. The default launcher is `public_reader`, read-only. A trusted operator may launch a proposer with `--identity assistant --allow-propose`; promotion requires a separate reviewer launcher with `--identity reviewer --allow-promote`. Do not expose that reviewer connection to the proposing agent. Same-role self-approval is denied. `apply=true` is intent, not authority.
+
+Private source metadata and conflict IDs are not available to public readers. Search applies scope filtering before the bounded limit, ordered by record ID. Tool schemas describe and validate all arguments; notifications produce no response and never execute tools. Errors retain request IDs and do not expose internal exception text. The adapter implements a bounded stdio subset, not every MCP feature.
+
+The trusted boundary is the launcher configuration and OS access to the database, policy, and CLI. The administrative CLI/Python API still accepts roles and is NOT an authentication boundary. Anyone able to edit the launcher or database is already trusted; do not give untrusted agents that filesystem/command access. This is role-level separation, not a multi-user identity provider. No database migration is required. Rollback: retain a database backup and use the previous package in a separate environment; do not re-expose the vulnerable adapter to untrusted clients.
 
 ## Privacy and anonymization
 
